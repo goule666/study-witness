@@ -1,4 +1,4 @@
-package com.goule666.study.witness.designPattern.singleton;
+package com.goule666.study.witness.design.pattern.singleton;
 
 /**
  * @author wlnie
