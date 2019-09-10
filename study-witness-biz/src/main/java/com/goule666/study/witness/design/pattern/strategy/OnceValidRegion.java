@@ -8,10 +8,10 @@ import java.lang.annotation.Target;
 /**
  * @author wlnie
  * @date 2019/9/8 21:02
- * @description 总金额策略
+ * @description 单次购买策略
  **/
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TotalValidRegion {
+public @interface OnceValidRegion {
     ValidRegion value();
 }

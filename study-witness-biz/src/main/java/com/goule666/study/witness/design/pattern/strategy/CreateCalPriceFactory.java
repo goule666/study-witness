@@ -8,6 +8,8 @@ import java.lang.annotation.Annotation;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 /**
  * @author wlnie
@@ -34,22 +36,25 @@ public class CreateCalPriceFactory {
      */
     public CalPrice getCalPrice(Customer customer) {
         if (!CollectionUtils.isEmpty(clazzList)) {
+            SortedMap<Integer, Class<? extends CalPrice>> sortedMap = new TreeMap<>();
             for (Class<? extends CalPrice> clazz : clazzList) {
-                TotalValidRegion totalValidRegion = handleClass(clazz);
-                if (totalValidRegion == null) {
+                Annotation annotation = handleClass(clazz);
+                if (annotation == null) {
                     continue;
                 }
-                if (customer.getTotalAmount().intValue() >= totalValidRegion.min()
-                        && customer.getTotalAmount().intValue() < totalValidRegion.max()) {
-                    try {
-                        return clazz.newInstance();
-                    } catch (InstantiationException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                if (annotation instanceof TotalValidRegion) {
+                    if (customer.getTotalAmount().intValue() >= ((TotalValidRegion) annotation).value().min()
+                            && customer.getTotalAmount().intValue() < ((TotalValidRegion) annotation).value().max()) {
+                        sortedMap.put(((TotalValidRegion) annotation).value().order(), clazz);
+                    }
+                } else if (annotation instanceof OnceValidRegion) {
+                    if (customer.getAmount().intValue() >= ((OnceValidRegion) annotation).value().min()
+                            && customer.getAmount().intValue() < ((OnceValidRegion) annotation).value().max()) {
+                        sortedMap.put(((OnceValidRegion) annotation).value().order(), clazz);
                     }
                 }
             }
+            return CalPriceProxy.getProxy(sortedMap);
         }
         return null;
     }
@@ -60,14 +65,14 @@ public class CreateCalPriceFactory {
      * @param clazz class
      * @return TotalValidRegion
      */
-    private TotalValidRegion handleClass(Class<? extends CalPrice> clazz) {
+    private Annotation handleClass(Class<? extends CalPrice> clazz) {
         Annotation[] annotations = clazz.getAnnotations();
         if (annotations == null || annotations.length == 0) {
             return null;
         }
         for (Annotation a : annotations) {
-            if (a instanceof TotalValidRegion) {
-                return (TotalValidRegion) a;
+            if (a instanceof TotalValidRegion || a instanceof OnceValidRegion) {
+                return a;
             }
         }
         return null;
