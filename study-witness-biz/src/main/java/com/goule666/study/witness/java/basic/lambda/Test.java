@@ -35,7 +35,6 @@ public class Test {
         //Lambda配合Optional<T>可以使Java对于null的处理变的异常优雅
         GlUser glUser = new GlUser();
         glUser.setName("123");
-        glUser.setNext(glUser);
         Optional<GlUser> glUserOptional = Optional.ofNullable(glUser);
 
         //1. 第一种
@@ -54,7 +53,7 @@ public class Test {
         });
 
         //4. 第四种 多个参数检查
-        String name = glUserOptional.map(GlUser::getNext).map(GlUser::getName).orElseThrow(() -> new Exception("参数不能为空，请检查"));
+        String name = glUserOptional.map(GlUser::getName).orElseThrow(() -> new Exception("参数不能为空，请检查"));
         System.out.println(name);
     }
 }
