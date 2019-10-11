@@ -12,3 +12,5 @@
 spring MVC的dispatcherServlet的 HandlerAdapter（target）、controller（adaptee）、SimpleControllerHandlerAdapter（adapter））
 
 这些设计模式都很重要，这里只列出了我目前认为比较重要的几种设计模式，后续会把所有的设计模式对应的实际应用场景的demo写出来。
+
+这周任务，把已经学了的设计模式，目前除了代理模式，观察者模式没有实际的应用场景以外，都有对应的源码，以及自己深刻的理解，这周结束，目标把这些设计模式对应的每一篇文章发出来，希望认真对待每一个字。
