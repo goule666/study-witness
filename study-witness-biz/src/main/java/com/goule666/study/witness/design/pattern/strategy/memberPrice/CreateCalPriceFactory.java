@@ -17,7 +17,14 @@ import java.util.TreeMap;
  * @description 创建CalPrice接口的工厂类 单例
  **/
 public class CreateCalPriceFactory {
-    private static final String PACKAGE_NAME = "com.goule666.study.witness.design.pattern.strategy.memberPrice";
+    private static String PACKAGE_NAME;
+
+    static {
+        Class clazz = CalPrice.class;
+        Package p = clazz.getPackage();
+        PACKAGE_NAME = p.getName();
+    }
+
     /**
      * 得到类加载器
      */
