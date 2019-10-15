@@ -1,4 +1,4 @@
-package com.goule666.study.witness.design.pattern.strategy;
+package com.goule666.study.witness.design.pattern.strategy.memberPrice;
 
 import java.math.BigDecimal;
 
