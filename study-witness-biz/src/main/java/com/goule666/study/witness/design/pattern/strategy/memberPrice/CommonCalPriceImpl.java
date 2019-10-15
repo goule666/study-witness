@@ -93,17 +93,3 @@ class Activity2 implements CalPrice {
         return originalPrice.subtract(new BigDecimal(400));
     }
 }
-
-class Activity3 implements CalPrice {
-
-    /**
-     * 根据原价计算优惠后的金额
-     *
-     * @param originalPrice 原价
-     * @return 优惠后的金额
-     */
-    @Override
-    public BigDecimal calPrice(BigDecimal originalPrice) {
-        return originalPrice.subtract(new BigDecimal(400));
-    }
-}
