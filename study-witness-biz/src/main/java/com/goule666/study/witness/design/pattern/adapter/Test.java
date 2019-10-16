@@ -14,7 +14,7 @@ public class Test {
 
     private List<VoltHandlerAdapter> voltHandlerAdapterList = new ArrayList<>(2);
 
-    private Map<String, VoltHandler> voltHandlerMap = new HashMap<>(16);
+    private Map<String, Object> voltHandlerMap = new HashMap<>(16);
 
     {
         //这里初始化适配器和处理器，由于本文重点是表示适配器模式，所以粗略的这样写，如果在实际项目中，应当从spring容器中去获取。
@@ -34,7 +34,7 @@ public class Test {
         });
         voltHandlerMap.put("japan", new JapanVoltHandler() {
             @Override
-            public Integer convert(Integer volt) {
+            public Integer japanConvert(Integer volt) {
                 System.out.println("输入电压：" + volt);
                 return 110;
             }
@@ -42,9 +42,16 @@ public class Test {
     }
 
     private void handle(String country, Integer volt) {
-        VoltHandler voltHandler = voltHandlerMap.get(country);
+        Object voltHandler = voltHandlerMap.get(country);
         for (VoltHandlerAdapter ha : voltHandlerAdapterList) {
+            //策略类模式，这里表示选择某一个策略
             if (ha.supports(voltHandler)) {
+                //适配器模式 对象适配器
+                //这里故意把handlerAdapter的两个实现类实现的不一样，用来说明，这里采用适配器模式，是为了兼容已有的接口
+                //假设ChinaVoltHandler是已有的接口，JapanVoltHandler是新增的接口
+                //target：VoltHandlerAdapter
+                //source：ChinaVoltHandler、JapanVoltHandler
+                //adapter：ChinaVoltHandler、JapanVoltHandlerAdapter
                 System.out.println(country + "输出电压：" + ha.handler(volt, voltHandler));
                 break;
             }

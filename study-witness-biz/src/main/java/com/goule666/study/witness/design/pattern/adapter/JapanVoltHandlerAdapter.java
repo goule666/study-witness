@@ -26,6 +26,6 @@ public class JapanVoltHandlerAdapter implements VoltHandlerAdapter {
      */
     @Override
     public Integer handler(Integer volt, Object voltHandler) {
-        return ((JapanVoltHandler) voltHandler).convert(volt);
+        return ((JapanVoltHandler) voltHandler).japanConvert(volt);
     }
 }
