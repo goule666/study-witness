@@ -2,7 +2,7 @@
 设计模式是一个长期学习的过程，不需要迫切的去记一些东西，需要理解，然后进行模仿，加深印象并可以熟练运用。
 我认为以下这些设计模式需特殊注意（源码出场率较高）：
 1. 单例模式（spring中的bean）
-2. 简单工厂模式、工厂模式（driver、connection，iterable、iterator）、抽象工厂模式（List.iterator、List.listIterator）
+2. 简单工厂模式、✔️工厂模式（driver、connection，iterable、iterator）、抽象工厂模式（List.iterator、List.listIterator）
 ✔️3. 策略模式（不同协议不同算法（处理器）、会员价格和满减活动）
 ✔️4. 责任链模式（不同的渠道获取水站）
 5. 代理模式（）
