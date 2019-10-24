@@ -16,9 +16,8 @@ import java.util.List;
 @RequestMapping(value = "/test")
 public class TestController {
     @ResponseBody
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
-    public String test(@Valid @RequestBody GlUser glUser){
-        System.out.println(glUser.toString());
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public String test(){
         return null;
     }
 }
