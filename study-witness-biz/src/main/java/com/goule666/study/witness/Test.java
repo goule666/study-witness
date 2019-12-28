@@ -1,6 +1,10 @@
 package com.goule666.study.witness;
 
+import javax.management.*;
+import java.lang.management.GarbageCollectorMXBean;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,8 +22,13 @@ public class Test {
         }
     }
 
-    public static void main(String[] args) {
-        Test test = new Test();
-        test.test();
+    public static void main(String[] args) throws MalformedObjectNameException, MBeanException, InstanceNotFoundException, ReflectionException {
+        Object flags = ManagementFactory.getPlatformMBeanServer().invoke(
+                ObjectName.getInstance("com.sun.management:type=DiagnosticCommand"),
+                "vmFlags", new Object[] { null }, new String[] { "[Ljava.lang.String;" });
+        for(String f: ((String)flags).split("\\s+"))
+            if(f.contains("GC")) System.out.println(f);
+        for(GarbageCollectorMXBean gc: ManagementFactory.getGarbageCollectorMXBeans())
+            System.out.printf("%-20s%s%n", gc.getName(), Arrays.toString(gc.getMemoryPoolNames()));
     }
 }
